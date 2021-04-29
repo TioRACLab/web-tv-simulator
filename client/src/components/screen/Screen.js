@@ -9,7 +9,6 @@ class Screen extends Component {
         this.NoSignalVideo = "/videos/noSignal.mp4"
         this.videoControl = React.createRef()
     }
-
     
 
     getVideoUrl = () => {
@@ -17,7 +16,8 @@ class Screen extends Component {
     }
     
     render() {
-        this.videoControl.current.volume = this.props.volume
+        if (this.videoControl.current)
+            this.videoControl.current.volume = this.props.volume
 
         return <video className="Screen" ref={this.videoControl} autoPlay={true} loop={true} src={this.getVideoUrl()} />
     }

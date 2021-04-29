@@ -13,24 +13,40 @@ class App extends Component {
         this.state = {
             TV: new TV()
         }
+
+        this.volumeControl = React.createRef()
     }
 
     onKeyUp = (event) => {
-        const TV = this.state.TV
-
         if (event.code === "NumpadAdd"
             || event.code === "ArrowRight") {
-                TV.upVolume()
-                this.setState({TV})
+                this.upVolume()
         }
 
         if (event.code === "NumpadSubtract"
             || event.code === "ArrowLeft") {
-                TV.downVolume()
-                this.setState({TV})
+                this.downVolume()
         }
 
-        //console.log(event.code)
+        if (event.code.includes("Digit"))
+            console.log(event.code[5])
+
+            if (event.code.includes("Numpad"))
+            console.log(event.code[6])
+    }
+
+    upVolume = () => {
+        const TV = this.state.TV
+        TV.upVolume()
+        this.setState({TV})
+        this.volumeControl.current.show()
+    }
+
+    downVolume = () => {
+        const TV = this.state.TV
+        TV.downVolume()
+        this.setState({TV})
+        this.volumeControl.current.show()
     }
 
     render() {
@@ -38,7 +54,7 @@ class App extends Component {
             <div className="App" tabIndex="0" onKeyUp={this.onKeyUp}>
                 <Screen volume={this.state.TV.volume} />
                 <Channel />
-                <Volume volume={this.state.TV.volume} />
+                <Volume ref={this.volumeControl} volume={this.state.TV.volume} />
             </div>
         );
     }

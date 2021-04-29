@@ -4,16 +4,6 @@ import './Volume.css'
 
 class Volume extends TimingShow {
 
-    /*componentDidMount() {
-        setTimeout(() => {
-            this.show()
-        }, 5000)
-
-        setTimeout(() => {
-            this.show()
-        }, 30000)
-    }*/
-
     getCurrentVolume = () => {
         const volumeArray = []
         const realVolume = this.props.volume * 10
@@ -26,7 +16,6 @@ class Volume extends TimingShow {
         }
         
         return volumeArray.join(" ")
-        //return "█ █ █ █ ■ ■ ■ ■ ■ ■"
     }
     
     render() {
