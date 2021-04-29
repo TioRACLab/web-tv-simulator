@@ -3,12 +3,23 @@ import './Screen.css'
 
 class Screen extends Component {
 
+    constructor(props) {
+        super(props)
+
+        this.NoSignalVideo = "/videos/noSignal.mp4"
+        this.videoControl = React.createRef()
+    }
+
+    
+
     getVideoUrl = () => {
-        return "/videos/noSignal.mp4"
+        return this.NoSignalVideo
     }
     
     render() {
-        return <video className="Screen" autoPlay={true} loop={true} src={this.getVideoUrl()} />
+        this.videoControl.current.volume = this.props.volume
+
+        return <video className="Screen" ref={this.videoControl} autoPlay={true} loop={true} src={this.getVideoUrl()} />
     }
 }
 
