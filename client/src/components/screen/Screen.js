@@ -7,6 +7,7 @@ class Screen extends Component {
         super(props)
 
         this.NoSignalVideo = "/videos/noSignal.mp4"
+        //this.NoSignalVideo = "/videos/Teste.mp4"
         this.videoControl = React.createRef()
     }
     

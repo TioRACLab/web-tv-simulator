@@ -3,7 +3,7 @@ import TV from './models/TV'
 import React, {Component} from 'react'
 import Screen from './components/screen/Screen'
 import Volume from './components/volume/Volume'
-import Channel from './components/channel/Channel'
+import NumberSelect from './components/numberSelect/NumberSelect'
 
 class App extends Component {
     
@@ -15,6 +15,7 @@ class App extends Component {
         }
 
         this.volumeControl = React.createRef()
+        this.numberSelect = React.createRef()   
     }
 
     onKeyUp = (event) => {
@@ -29,10 +30,17 @@ class App extends Component {
         }
 
         if (event.code.includes("Digit"))
-            console.log(event.code[5])
+            this.selectChannel(parseInt(event.code[5]))
 
-            if (event.code.includes("Numpad"))
-            console.log(event.code[6])
+        if (event.code.includes("Numpad"))
+            this.selectChannel(parseInt(event.code[6]))
+    }
+
+    selectChannel(number) {
+        const TV = this.state.TV
+        TV.selectChannel(number)
+        this.setState({TV})
+        this.numberSelect?.current.show()
     }
 
     upVolume = () => {
@@ -53,7 +61,7 @@ class App extends Component {
         return (
             <div className="App" tabIndex="0" onKeyUp={this.onKeyUp}>
                 <Screen volume={this.state.TV.volume} />
-                <Channel />
+                <NumberSelect ref={this.numberSelect} value={this.state.TV.getSelector()} />
                 <Volume ref={this.volumeControl} volume={this.state.TV.volume} />
             </div>
         );
