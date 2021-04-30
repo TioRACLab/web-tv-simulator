@@ -1,4 +1,5 @@
 import './App.css'
+import axios from 'axios'
 import TV from './models/TV'
 import React, {Component} from 'react'
 import Screen from './components/screen/Screen'
@@ -16,6 +17,19 @@ class App extends Component {
 
         this.volumeControl = React.createRef()
         this.numberSelect = React.createRef()   
+    }
+
+    async componentDidMount() {
+        try {
+            const url = process.env.REACT_APP_CHANNELS
+            const response = await axios.get(url)
+            const TV = this.state.TV
+            TV.updateValues(response.data)
+            this.setState({TV})
+        }
+        catch {
+            console.log("Ops!!!")
+        }
     }
 
     onKeyUp = (event) => {

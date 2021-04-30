@@ -1,7 +1,11 @@
 class Channel {
     constructor() {
-        this.number = 12
-        this.containsSignal = false
+        this.number = 0
+        this.videos = []
+    }
+
+    containsSignal = () => {
+        return this.videos && this.videos.length > 0
     }
 }
 

@@ -6,6 +6,22 @@ class TV {
         this.volume = 1
         this.select = null
         this.timeSelect = null
+        this.channels = []
+    }
+
+    updateValues(data) {
+        if (data.channels) 
+            this.channels = data.channels.map((item) => {
+                const c = new Channel()
+
+                c.number = parseInt(item.number)
+                c.videos = item.videos
+
+                return c
+            })
+
+        if (data.volume)
+            this.volume = parseFloat(data.volume)
     }
 
     upVolume() {
