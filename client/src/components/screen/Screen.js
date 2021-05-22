@@ -7,18 +7,23 @@ class Screen extends Component {
         super(props)
 
         this.NoSignalVideo = "/videos/noSignal.mp4"
-        //this.NoSignalVideo = "/videos/Teste.mp4"
         this.videoControl = React.createRef()
+        
     }
     
+    changeVideo = () => {
+        if (this.props.TV) {
+            
+        }
+    }
 
     getVideoUrl = () => {
         return this.NoSignalVideo
     }
     
     render() {
-        if (this.videoControl.current)
-            this.videoControl.current.volume = this.props.volume
+        /*if (this.videoControl.current)
+            this.videoControl.current.volume = this.props.volume*/
 
         return <video className="Screen" ref={this.videoControl} autoPlay={true} loop={true} src={this.getVideoUrl()} />
     }

@@ -1,16 +1,21 @@
 import Channel from './Channel'
 
 class TV {
-    constructor() {
+    constructor(onChangeVolumeEvent, onChangeSelectorEvent) {
         this.channel = new Channel()
-        this.volume = 1
-        this.select = null
+        this.volume = .7
+        this.select = ""
         this.timeSelect = null
         this.channels = []
+
+        this.onChangeVolumeEvent = onChangeVolumeEvent
+        this.onChangeSelectorEvent = onChangeSelectorEvent
+        this.onChangeSelector()
+        this.onChangeVolume()
     }
 
     updateValues(data) {
-        if (data.channels) 
+        /*+if (data.channels) 
             this.channels = data.channels.map((item) => {
                 const c = new Channel()
 
@@ -21,51 +26,53 @@ class TV {
             })
 
         if (data.volume)
-            this.volume = parseFloat(data.volume)
+            this.volume = parseFloat(data.volume)*/
     }
 
     upVolume() {
         this.volume += 0.1
+        this.volume = parseFloat(this.volume.toFixed(1))
 
         if (this.volume > 1)
             this.volume = 1
+
+        this.onChangeVolume()
     }
 
     downVolume() {
         this.volume -= 0.1
+        this.volume = parseFloat(this.volume.toFixed(1))
 
         if (this.volume < 0)
             this.volume = 0
-    }
 
-    getSelector() {
-        if (this.select)
-            return this.select
-        
-        return this.channel.number
+        this.onChangeVolume()
     }
 
     selectChannel(number) {
-        if (this.select == null)
-            this.select = number.toString()
-        else
-            this.select += number.toString()
+        this.clearTimeSelect()
+
+        if (this.select.length >= 2)
+            this.select = ""
+
+        this.select += number.toString()
 
         if (this.select?.length >= 2) {
-            this.channel.number = this.select
-            this.select = null
-            this.clearTimeSelect()
+            this.changeChannel(parseInt(this.select))
         }
         else {
-            this.clearTimeSelect()
-
             this.timeSelect = setTimeout(() => {
-                this.channel.number = this.select
-                this.select = null
-                clearTimeout(this.timeSelect)
-                this.timeSelect = null
+                this.changeChannel(parseInt(this.select))
+                this.clearTimeSelect()
             }, 3000)
+
+            this.onChangeSelector()
         }
+    }
+
+    changeChannel(number) {
+        this.select = number.toString().padStart(2, '0')
+        this.onChangeSelector()
     }
 
     clearTimeSelect() {
@@ -73,6 +80,16 @@ class TV {
             clearTimeout(this.timeSelect)
             this.timeSelect = null
         }
+    }
+
+    onChangeVolume() {
+        if (this.onChangeVolumeEvent)
+            this.onChangeVolumeEvent(this.volume)
+    }
+
+    onChangeSelector() {
+        if (this.onChangeSelectorEvent)
+            this.onChangeSelectorEvent(this.select)
     }
 }
 

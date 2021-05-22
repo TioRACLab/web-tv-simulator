@@ -1,12 +1,20 @@
-import React from 'react'
-import TimingShow from '../TimingShow'
 import './Volume.css'
+import React from 'react'
+import { connect } from 'react-redux'
+import TimingShow from '../TimingShow'
 
 class Volume extends TimingShow {
+    constructor(props) {
+        super(props)
+        const { volume } = this.props
+        this.volume = volume
+    }
 
     getCurrentVolume = () => {
+        const { volume } = this.props
+
         const volumeArray = []
-        const realVolume = this.props.volume * 10
+        const realVolume = volume * 10
 
         for (let i = 0; i < 10; i++) {
             if (i < realVolume)
@@ -14,7 +22,12 @@ class Volume extends TimingShow {
             else
                 volumeArray.push("■")
         }
-        
+
+        if (this.volume !== volume) {
+            this.volume = volume
+            this.show()
+        }
+
         return volumeArray.join(" ")
     }
     
@@ -30,4 +43,8 @@ class Volume extends TimingShow {
     }
 }
 
-export default Volume
+const mapStateToProps = store => ({
+    volume: store.tvState.volume
+})
+
+export default connect(mapStateToProps)(Volume)

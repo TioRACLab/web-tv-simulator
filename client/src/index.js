@@ -1,13 +1,16 @@
-import React from 'react';
-import ReactDOM from 'react-dom';
-import './index.css';
-import App from './App';
-import reportWebVitals from './reportWebVitals';
+import './index.css'
+import React from 'react'
+import { Store } from './store'
+import ReactDOM from 'react-dom'
+import { Provider } from 'react-redux'
+import TVApp from './components/tvApp/TVApp'
+import reportWebVitals from './reportWebVitals'
+
 
 ReactDOM.render(
-  <React.StrictMode>
-    <App />
-  </React.StrictMode>,
+  <Provider store={Store}>
+    <TVApp />
+  </Provider>,
   document.getElementById('root')
 );
 
