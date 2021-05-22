@@ -14,7 +14,7 @@ class TimingShow extends Component {
     }
 
     show() {
-        this.setState({show: true, startDate: new Date()})
+        setTimeout(() => { this.setState({show: true, startDate: new Date()}) }, 10)
 
         if (!this.looping) {
             this.looping = setInterval(this.showLooping, 250)

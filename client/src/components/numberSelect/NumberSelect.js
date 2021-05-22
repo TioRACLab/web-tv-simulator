@@ -13,12 +13,10 @@ class NumberSelect extends TimingShow {
     render() {
         const { selector } = this.props
 
-        if (selector && this.selector !== selector) {
+        if (selector && !isNaN(selector) && this.selector !== selector) {
             this.selector = selector
             this.show()
         }
-
-
 
         return (
             <div className={`NumberSelect ${this.state.show && "show"}`}>
