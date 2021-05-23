@@ -15,8 +15,8 @@ class Screen extends Component {
             this.videoControl.current.currentTime = 0
             this.videoControl.current.play()
         }
-
-        this.props.TV?.onChangeVideo()
+        
+        this.props.TV.onChangeVideo()
     }
     
     render() {
