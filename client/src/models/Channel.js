@@ -1,7 +1,8 @@
 class Channel {
     constructor() {
-        this.number = 0
+        this.number = 3
         this.videos = []
+        this.randomVideos = []
     }
 
     containsSignal = () => {
@@ -10,7 +11,12 @@ class Channel {
 
     getNextVideo() {
         if (this.containsSignal()) {
+            if (this.randomVideos.length <= 0) {
+                this.randomVideos = [...this.videos]
+                this.randomVideos = this.randomVideos.sort(() => Math.random() - 0.5)
+            }
 
+            return this.randomVideos.shift()
         }
 
         return NoSignalVideo

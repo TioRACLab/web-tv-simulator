@@ -11,12 +11,12 @@ class Screen extends Component {
     }
 
     onVideoEnded = () => {
-        this.props.TV?.onChangeVideo()
-
         if (this.videoControl.current) {
             this.videoControl.current.currentTime = 0
             this.videoControl.current.play()
         }
+
+        this.props.TV?.onChangeVideo()
     }
     
     render() {

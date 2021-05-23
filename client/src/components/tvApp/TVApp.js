@@ -23,21 +23,14 @@ class TVApp extends Component {
     }
 
     componentDidMount() {
-        //this.getChannels()
+        this.getChannels()
     }
 
     async getChannels() {
         try {
             const url = process.env.REACT_APP_CHANNELS
             const response = await axios.get(url)
-            const TV = this.state.TV
-            TV.updateValues(response.data)
-            this.setState({TV})
-
-            const channel = localStorage.getItem("@TV/currentChannel")
-
-            if (channel != null)
-                this.selectChannel(channel)
+            this.TV.updateValues(response.data)
         }
         catch {
             console.log("Ops!!!")
@@ -54,6 +47,12 @@ class TVApp extends Component {
             || event.code === "ArrowLeft") {
                 this.TV.downVolume()
         }
+
+        if (event.code === "ArrowUp")
+            this.TV.upChannel()
+
+        if (event.code === "ArrowDown")
+            this.TV.downChannel()
 
         if (event.code.includes("Digit"))
             this.TV.selectChannel(parseInt(event.code[5]))

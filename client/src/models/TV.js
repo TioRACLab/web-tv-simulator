@@ -18,7 +18,7 @@ class TV {
     }
 
     updateValues(data) {
-        /*+if (data.channels) 
+        if (data.channels) {
             this.channels = data.channels.map((item) => {
                 const c = new Channel()
 
@@ -28,8 +28,9 @@ class TV {
                 return c
             })
 
-        if (data.volume)
-            this.volume = parseFloat(data.volume)*/
+            this.changeChannel(this.channel.number)
+        }
+
     }
 
     upVolume() {
@@ -50,6 +51,47 @@ class TV {
             this.volume = 0
 
         this.onChangeVolume()
+    }
+
+    upChannel() {
+        if (this.channels.length > 0) {
+            const channelsNumber = this.channels.map(c =>  c.number )
+            channelsNumber.sort()
+            
+            for (let x = 0; x < channelsNumber.length; x++) {
+                let channelNumber = channelsNumber[x]
+                if (channelNumber > this.channel.number) {
+                    this.changeChannel(channelNumber)
+                    return
+                }
+            }
+
+            this.changeChannel(channelsNumber[0])
+        }
+        else {
+            this.changeChannel(this.channel.number + 1)
+        }
+    }
+
+    downChannel() {
+
+        if (this.channels.length > 0) {
+            const channelsNumber = this.channels.map(c =>  c.number )
+            channelsNumber.sort()
+            
+            for (let x = channelsNumber.length - 1; x >= 0; x--) {
+                let channelNumber = channelsNumber[x]
+                if (channelNumber < this.channel.number) {
+                    this.changeChannel(channelNumber)
+                    return
+                }
+            }
+
+            this.changeChannel(channelsNumber[channelsNumber.length - 1])
+        }
+        else {
+            this.changeChannel(this.channel.number + 1)
+        }
     }
 
     selectChannel(number) {
@@ -74,7 +116,19 @@ class TV {
     }
 
     changeChannel(number) {
+        const channelsFiltered = this.channels.filter(c => c.number === number)
+        
+        if (channelsFiltered.length <= 0) {
+            const noSignalChannel = new Channel()
+            noSignalChannel.number = number
+            this.channel = noSignalChannel
+        }
+        else {
+            this.channel = channelsFiltered[0]
+        }
+
         this.select = number.toString().padStart(2, '0')
+        this.onChangeVideo()
         this.onChangeSelector()
     }
 
