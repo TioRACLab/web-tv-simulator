@@ -1,17 +1,20 @@
 import Channel from './Channel'
 
 class TV {
-    constructor(onChangeVolumeEvent, onChangeSelectorEvent) {
+    constructor(onChangeVideoEvent, onChangeVolumeEvent, onChangeSelectorEvent) {
         this.channel = new Channel()
         this.volume = .7
         this.select = ""
         this.timeSelect = null
         this.channels = []
 
+        this.onChangeVideoEvent = onChangeVideoEvent
         this.onChangeVolumeEvent = onChangeVolumeEvent
         this.onChangeSelectorEvent = onChangeSelectorEvent
-        this.onChangeSelector()
+        
+        this.onChangeVideo()
         this.onChangeVolume()
+        this.onChangeSelector()
     }
 
     updateValues(data) {
@@ -80,6 +83,11 @@ class TV {
             clearTimeout(this.timeSelect)
             this.timeSelect = null
         }
+    }
+
+    onChangeVideo() {
+        if (this.onChangeVideoEvent)
+            this.onChangeVideoEvent(this.channel.getNextVideo())
     }
 
     onChangeVolume() {

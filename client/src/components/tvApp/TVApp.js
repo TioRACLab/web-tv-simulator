@@ -3,7 +3,7 @@ import axios from 'axios'
 import TV from '../../models/TV'
 import { connect } from 'react-redux'
 import React, {Component} from 'react'
-import { tvChangeVolume, tvChangeSelector } from '../../actions'
+import { tvChangeVideo, tvChangeVolume, tvChangeSelector } from '../../actions'
 import { bindActionCreators } from 'redux'
 import Screen from '../../components/screen/Screen'
 import Volume from '../../components/volume/Volume'
@@ -14,17 +14,12 @@ class TVApp extends Component {
     constructor(props) {
         super(props)
 
-        /*this.volumeControl = React.createRef()
-        this.numberSelect = React.createRef()
-        this.screenControl = React.createRef()*/
-
         this.startValues()
     }
 
     startValues() {
-        const { tvChangeVolume, tvChangeSelector } = this.props
-
-        this.TV = new TV(tvChangeVolume, tvChangeSelector)
+        const { tvChangeVideo, tvChangeVolume, tvChangeSelector } = this.props
+        this.TV = new TV(tvChangeVideo, tvChangeVolume, tvChangeSelector)
     }
 
     componentDidMount() {
@@ -83,6 +78,6 @@ const mapStateToProps = store => ({
 })
 
 const mapDispatchToProps = dispatch =>
-  bindActionCreators({ tvChangeVolume, tvChangeSelector }, dispatch)
+  bindActionCreators({ tvChangeVideo, tvChangeVolume, tvChangeSelector }, dispatch)
 
 export default connect(mapStateToProps, mapDispatchToProps)(TVApp)

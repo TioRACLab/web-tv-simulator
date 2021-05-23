@@ -1,32 +1,37 @@
-import React, { Component } from 'react'
 import './Screen.css'
+import { connect } from 'react-redux'
+import React, { Component } from 'react'
 
 class Screen extends Component {
 
     constructor(props) {
         super(props)
 
-        this.NoSignalVideo = "/videos/noSignal.mp4"
-        this.videoControl = React.createRef()
-        
-    }
-    
-    changeVideo = () => {
-        if (this.props.TV) {
-            
-        }
+        this.videoControl = React.createRef()        
     }
 
-    getVideoUrl = () => {
-        return this.NoSignalVideo
+    onVideoEnded = () => {
+        this.props.TV?.onChangeVideo()
+
+        if (this.videoControl.current) {
+            this.videoControl.current.currentTime = 0
+            this.videoControl.current.play()
+        }
     }
     
     render() {
-        /*if (this.videoControl.current)
-            this.videoControl.current.volume = this.props.volume*/
+        const { video, volume } = this.props
 
-        return <video className="Screen" ref={this.videoControl} autoPlay={true} loop={true} src={this.getVideoUrl()} />
+        if (this.videoControl.current)
+            this.videoControl.current.volume = volume
+
+        return <video className="Screen" ref={this.videoControl} autoPlay={true} onEnded={this.onVideoEnded} src={video} />
     }
 }
 
-export default Screen
+const mapStateToProps = store => ({
+    video: store.tvState.video,
+    volume: store.tvState.volume
+})
+
+export default connect(mapStateToProps)(Screen)
