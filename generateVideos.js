@@ -20,5 +20,5 @@ formartUri = (files) => {
     const json = JSON.stringify(uriFiles, null, '\t')
     const fs = require('fs')
 
-    fs.writeFile('videos.json', json, 'utf8', () => { console.log("End...") })
+    fs.writeFile(args[2], json, 'utf8', () => { console.log("End...") })
 }
