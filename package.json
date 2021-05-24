@@ -1,0 +1,23 @@
+{
+  "name": "web-tv-simulator",
+  "version": "1.0.0",
+  "description": "",
+  "main": "generateVideos.js",
+  "scripts": {
+    "videos": "node generateVideos.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/TioRACLab/web-tv-simulator.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/TioRACLab/web-tv-simulator/issues"
+  },
+  "homepage": "https://github.com/TioRACLab/web-tv-simulator#readme",
+  "dependencies": {
+    "glob": "^7.1.7"
+  }
+}
