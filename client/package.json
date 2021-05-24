@@ -39,5 +39,6 @@
   "devDependencies": {
     "react-redux": "^7.2.4",
     "redux": "^4.1.0"
-  }
+  },
+  "proxy": "http://localhost:5000"
 }
